@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Donors</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('donors') }}">Donors</a>
+        <a href="{{ url_for('receivers') }}">Receivers</a>
+        <a href="{{ url_for('inventory') }}">Inventory</a>
+        <a href="{{ url_for('feedback') }}">Feedback</a>
+        {% if session.username %}
+            <a href="{{ url_for('logout') }}">Logout</a>
+            <a href="{{ url_for('profile') }}">Profile</a>
+            {% if session.role == 'admin' %}
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            {% endif %}
+        {% endif %}
+    </nav>
+    <div class="container">
+        <h2>Donors List</h2>
+        <form method="POST">
+            <input type="text" name="search" placeholder="Search by name or blood type">
+            <button type="submit">Search</button>
+            <button><a href="{{url_for('add_donor')}}"> ADD DONAR</a></button>
+            <button><a href="{{url_for('delete_donor')}}"> DELETE DONAR</a></button>
+        </form>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Blood Type</th>
+                <th>Contact</th>
+                <th>Last Donation</th>
+                <th>Age</th>
+                <th>Weight</th>
+                <th>Medical History</th>
+            </tr>
+            {% for donor in donors %}
+            <tr>
+                <td>{{ donor[1] }}</td>
+                <td>{{ donor[2] }}</td>
+                <td>{{ donor[3] }}</td>
+                <td>{{ donor[4] }}</td>
+                <td>{{ donor[5] }}</td>
+                <td>{{ donor[6] }}</td>
+                <td>{{ donor[7] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
